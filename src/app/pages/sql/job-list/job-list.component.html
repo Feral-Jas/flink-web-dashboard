@@ -1,0 +1,41 @@
+<nz-card
+  [nzBordered]="false"
+  [nzTitle]="'SQl Job List'"
+  [nzLoading]="isLoading"
+  [nzExtra]="extraTemplate"
+>
+  <ng-container>
+    <nz-table #editRowTable [nzData]="dataSet">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>SQL</th>
+          <th>Creator</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of editRowTable.data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.sql }}</td>
+          <td>{{ data.creator }}</td>
+          <td>{{ data.description }}</td>
+          <td>
+            <a>Edit</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a
+              nz-popconfirm
+              nzPopconfirmTitle="Sure to delete?"
+              (nzOnConfirm)="deleteRow(data.name)"
+              >Delete</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-container>
+  <ng-template #extraTemplate>
+    <input nz-input />
+  </ng-template>
+</nz-card>
