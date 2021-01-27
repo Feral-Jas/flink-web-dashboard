@@ -5,5 +5,5 @@
 2. added SQL job list
 
 ## installation
-1. check proxy.json
+1. check proxy.conf.json
 2. npm run proxy
