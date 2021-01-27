@@ -8,6 +8,7 @@
 ## installation
 
 1. check proxy.json
-2. npm run proxy
+1. check proxy.conf.json
+1. npm run proxy
 
 ISSUE-1 init
