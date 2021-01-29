@@ -16,17 +16,23 @@
  * limitations under the License.
  */
 
-import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NgZorroAntdModule, NZ_I18N, en_US, NZ_ICONS, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
-import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
+import { BrowserModule } from "@angular/platform-browser";
+import { APP_INITIALIZER, Injector, NgModule } from "@angular/core";
+import { Router } from "@angular/router";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import {
+  NgZorroAntdModule,
+  NZ_I18N,
+  en_US,
+  NZ_ICONS,
+  NZ_NOTIFICATION_CONFIG,
+} from "ng-zorro-antd";
+import { FormsModule } from "@angular/forms";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { registerLocaleData } from "@angular/common";
+import en from "@angular/common/locales/en";
 
 import {
   BarsOutline,
@@ -66,13 +72,13 @@ import {
   PicCenterOutline,
   EditOutline,
   OrderedListOutline,
-  ProjectOutline
-} from '@ant-design/icons-angular/icons';
+  ProjectOutline,
+  QuestionOutline,
+} from "@ant-design/icons-angular/icons";
 
-import { StatusService } from 'services';
-import { ConfigurationInterface } from 'interfaces';
-import { AppInterceptor } from './app.interceptor';
-
+import { StatusService } from "services";
+import { ConfigurationInterface } from "interfaces";
+import { AppInterceptor } from "./app.interceptor";
 
 registerLocaleData(en);
 
@@ -87,19 +93,27 @@ export function AppInitServiceFactory(
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, NgZorroAntdModule, FormsModule, HttpClientModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgZorroAntdModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+  ],
   providers: [
     {
       provide: NZ_I18N,
-      useValue: en_US
+      useValue: en_US,
     },
     {
       provide: NZ_NOTIFICATION_CONFIG,
-      useValue: { nzMaxStack: 1 }
+      useValue: { nzMaxStack: 1 },
     },
     {
       provide: NZ_ICONS,
       useValue: [
+        QuestionOutline,
         BarsOutline,
         BuildOutline,
         CheckCircleOutline,
@@ -137,21 +151,21 @@ export function AppInitServiceFactory(
         PicCenterOutline,
         EditOutline,
         OrderedListOutline,
-        ProjectOutline
-      ]
+        ProjectOutline,
+      ],
     },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
-      multi: true
+      multi: true,
     },
     {
       provide: APP_INITIALIZER,
       useFactory: AppInitServiceFactory,
       deps: [StatusService, Injector],
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
