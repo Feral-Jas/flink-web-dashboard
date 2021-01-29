@@ -6,37 +6,51 @@
 >
   <ng-container>
     <div nz-row [nzJustify]="center">
-      <div nz-col nzSpan="10">
-        <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm">
-          <!-- <input nz-input formControlName="title" /> -->
-          <textarea rows="25" nz-input formControlName="text"></textarea>
-        </form>
-      </div>
-      <div nz-col nzSpan="12">
-        <flink-monaco-editor
-          [value]="validateForm.get('text').value"
-        ></flink-monaco-editor>
+      <div nz-col>
+        <sql-monaco-editor
+          (dataChange)="dataChange($event)"
+        ></sql-monaco-editor>
       </div>
     </div>
   </ng-container>
 
   <ng-template #extraTemplate>
-    <nz-button-group>
-      <button
-        nz-button
-        nzType="danger"
-        [nzSize]="small"
-        (click)="testInterface(validateForm)"
-      >
-        Parse
-      </button>
-      <button nz-button nzType="success" [nzSize]="small" (click)="showPlan()">
-        Show Plan
-      </button>
-      <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">
-        Submit
-      </button>
-    </nz-button-group>
+    <nz-space>
+      <nz-space-item>
+        <button
+          nz-button
+          nzType="danger"
+          [nzSize]="small"
+          nzShape="circle"
+          (click)="showTip()"
+        >
+          <i nz-icon nzType="question" nzTheme="outline"></i>
+        </button>
+      </nz-space-item>
+      <nz-space-item>
+        <nz-button-group>
+          <button
+            nz-button
+            nzType="danger"
+            [nzSize]="small"
+            (click)="testInterface(validateForm)"
+          >
+            Parse
+          </button>
+          <button
+            nz-button
+            nzType="success"
+            [nzSize]="small"
+            (click)="showPlan()"
+          >
+            Show Plan
+          </button>
+          <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">
+            Submit
+          </button>
+        </nz-button-group>
+      </nz-space-item>
+    </nz-space>
   </ng-template>
 </nz-card>
 <nz-drawer
@@ -48,5 +62,19 @@
 >
   <ng-container>
     <flink-dagre></flink-dagre>
+  </ng-container>
+</nz-drawer>
+<nz-drawer
+  [nzWidth]="'30%'"
+  [nzVisible]="tipVisible"
+  [nzPlacement]="'right'"
+  [nzTitle]="'SQL Tips'"
+  (nzOnClose)="hideTip()"
+>
+  <ng-container>
+    <section>
+      <h1>Flink SQL tips</h1>
+      <p>simple declaration of flink sql</p>
+    </section>
   </ng-container>
 </nz-drawer>

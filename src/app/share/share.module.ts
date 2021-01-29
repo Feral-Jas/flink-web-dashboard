@@ -16,22 +16,23 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { ResizeComponent } from 'share/common/resize/resize.component';
-import { CheckpointBadgeComponent } from 'share/customize/checkpoint-badge/checkpoint-badge.component';
-import { JobChartComponent } from 'share/customize/job-chart/job-chart.component';
-import { PipeModule } from 'share/pipes/pipe.module';
-import { DagreModule } from 'share/common/dagre/dagre.module';
-import { FileReadDirective } from 'share/common/file-read/file-read.directive';
-import { MonacoEditorComponent } from 'share/common/monaco-editor/monaco-editor.component';
-import { NavigationComponent } from 'share/common/navigation/navigation.component';
-import { JobBadgeComponent } from 'share/customize/job-badge/job-badge.component';
-import { JobListComponent } from 'share/customize/job-list/job-list.component';
-import { TaskBadgeComponent } from 'share/customize/task-badge/task-badge.component';
-import { RefreshDownloadComponent } from 'share/customize/refresh-download/refresh-download.component';
-import { BackpressureBadgeComponent } from './customize/backpressure-badge/backpressure-badge.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { NgZorroAntdModule } from "ng-zorro-antd";
+import { ResizeComponent } from "share/common/resize/resize.component";
+import { CheckpointBadgeComponent } from "share/customize/checkpoint-badge/checkpoint-badge.component";
+import { JobChartComponent } from "share/customize/job-chart/job-chart.component";
+import { PipeModule } from "share/pipes/pipe.module";
+import { DagreModule } from "share/common/dagre/dagre.module";
+import { FileReadDirective } from "share/common/file-read/file-read.directive";
+import { MonacoEditorComponent } from "share/common/monaco-editor/monaco-editor.component";
+import { SqlMonacoEditorComponent } from "share/common/sql-monaco-editor/monaco-editor.component";
+import { NavigationComponent } from "share/common/navigation/navigation.component";
+import { JobBadgeComponent } from "share/customize/job-badge/job-badge.component";
+import { JobListComponent } from "share/customize/job-list/job-list.component";
+import { TaskBadgeComponent } from "share/customize/task-badge/task-badge.component";
+import { RefreshDownloadComponent } from "share/customize/refresh-download/refresh-download.component";
+import { BackpressureBadgeComponent } from "./customize/backpressure-badge/backpressure-badge.component";
 
 @NgModule({
   imports: [CommonModule, NgZorroAntdModule, PipeModule, DagreModule],
@@ -41,12 +42,13 @@ import { BackpressureBadgeComponent } from './customize/backpressure-badge/backp
     JobListComponent,
     FileReadDirective,
     MonacoEditorComponent,
+    SqlMonacoEditorComponent,
     NavigationComponent,
     RefreshDownloadComponent,
     ResizeComponent,
     JobChartComponent,
     CheckpointBadgeComponent,
-    BackpressureBadgeComponent
+    BackpressureBadgeComponent,
   ],
   exports: [
     JobListComponent,
@@ -55,6 +57,7 @@ import { BackpressureBadgeComponent } from './customize/backpressure-badge/backp
     DagreModule,
     FileReadDirective,
     MonacoEditorComponent,
+    SqlMonacoEditorComponent,
     NavigationComponent,
     RefreshDownloadComponent,
     JobBadgeComponent,
@@ -62,7 +65,7 @@ import { BackpressureBadgeComponent } from './customize/backpressure-badge/backp
     ResizeComponent,
     JobChartComponent,
     CheckpointBadgeComponent,
-    BackpressureBadgeComponent
-  ]
+    BackpressureBadgeComponent,
+  ],
 })
 export class ShareModule {}

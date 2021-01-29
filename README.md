@@ -12,3 +12,5 @@
 1. npm run proxy
 
 ISSUE-1 init
+FLINK-5 check
+FLINK-3 check

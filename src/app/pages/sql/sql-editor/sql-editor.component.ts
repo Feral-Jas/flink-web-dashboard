@@ -5,10 +5,10 @@ import {
   ViewChild,
   OnDestroy,
 } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import { SqlService } from "services";
 import { Subject } from "rxjs";
-import { MonacoEditorComponent } from "share/common/monaco-editor/monaco-editor.component";
+import { SqlMonacoEditorComponent } from "share/common/sql-monaco-editor/monaco-editor.component";
 import { NzMessageService } from "ng-zorro-antd";
 import { DagreComponent } from "share/common/dagre/dagre.component";
 import { NodesItemCorrectInterface, NodesItemLinkInterface } from "interfaces";
@@ -21,25 +21,23 @@ import { NodesItemCorrectInterface, NodesItemLinkInterface } from "interfaces";
 export class SqlEditorComponent implements OnInit, OnDestroy {
   validateForm: FormGroup;
   planVisible: boolean;
+  tipVisible: boolean;
   destroy$ = new Subject();
   graphData: string;
+  flinkSql: string;
   @ViewChild(DagreComponent)
   dagreComponent: DagreComponent;
-  @ViewChild(MonacoEditorComponent)
-  monacoEditorComponent: MonacoEditorComponent;
+  @ViewChild(SqlMonacoEditorComponent)
+  monacoEditorComponent: SqlMonacoEditorComponent;
+
   constructor(
     private sqlService: SqlService,
-    private fb: FormBuilder,
-    private message: NzMessageService // private jarService: JarService
+    private message: NzMessageService
   ) {}
   ngOnInit() {
     this.planVisible = false;
-    this.validateForm = this.fb.group({
-      title: ["kafka2kafka"],
-      text: [
-        "CREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);",
-      ],
-    });
+    this.flinkSql =
+      "CREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -53,7 +51,7 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
     });
   }
   alert() {
-    this.message.info("deployed");
+    this.message.info(this.flinkSql);
   }
   showPlan() {
     const nodes: NodesItemCorrectInterface[] = [
@@ -104,5 +102,14 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   }
   hidePlan() {
     this.planVisible = false;
+  }
+  showTip() {
+    this.tipVisible = true;
+  }
+  hideTip() {
+    this.tipVisible = false;
+  }
+  dataChange(sql: string) {
+    this.flinkSql = sql;
   }
 }
