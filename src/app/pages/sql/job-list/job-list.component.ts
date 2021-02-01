@@ -3,46 +3,26 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  OnDestroy,
 } from "@angular/core";
-import { SqlService } from "services";
-
-class SqlJob {
-  name: string;
-  sql: string;
-  creator: string;
-  description: string;
-}
+import { SqlJobInterface } from "interfaces";
+import { SqlService, StatusService } from "services";
+import { flatMap, takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 @Component({
   selector: "flink-job-list",
   templateUrl: "./job-list.component.html",
   styleUrls: ["./job-list.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class JobListComponent implements OnInit {
-  dataSet: Array<SqlJob> = [];
-  constructor(private cdr: ChangeDetectorRef, private sqlService: SqlService) {}
-
-  ngOnInit() {
-    this.dataSet.push({
-      name: "hacko",
-      sql: "insert into kafka2 select * from kafka1",
-      creator: "James",
-      description: "first job",
-    });
-    this.dataSet.push({
-      name: "metro",
-      sql:
-        "insert into kafka3 select * from kafka4 join dameng1 on kafka3.id=dameng1.id",
-      creator: "James",
-      description: "second job",
-    });
-    this.sqlService.getSqlJobs("").subscribe((job) => {
-      if (job.uuid != undefined) {
-        console.log(job);
-      }
-    });
-    console.log(this.dataSet);
-  }
+export class JobListComponent implements OnInit, OnDestroy {
+  dataSet: Array<SqlJobInterface> = [];
+  destroy$ = new Subject();
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private sqlService: SqlService,
+    private statusService: StatusService
+  ) {}
   deleteRow(rowName: string): void {
     // console.log(this.dataSet);
     const row = this.dataSet.find((row) => row.name == rowName);
@@ -56,5 +36,28 @@ export class JobListComponent implements OnInit {
   }
   showCur() {
     console.log(this.dataSet);
+  }
+  shorten(sql: string) {
+    return sql.substring(0, 70) + "...";
+  }
+  ngOnInit() {
+    this.statusService.refresh$
+      .pipe(
+        takeUntil(this.destroy$),
+        flatMap(() => this.sqlService.getSqlJobs(""))
+      )
+      .subscribe(
+        (data) => {
+          this.dataSet = data;
+          this.cdr.markForCheck();
+        },
+        () => {
+          this.cdr.markForCheck();
+        }
+      );
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

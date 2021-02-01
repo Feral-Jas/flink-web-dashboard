@@ -10,7 +10,6 @@
         <tr>
           <th>Name</th>
           <th>SQL</th>
-
           <th>Description</th>
           <th>Action</th>
         </tr>
@@ -18,7 +17,7 @@
       <tbody>
         <tr *ngFor="let data of editRowTable.data">
           <td>{{ data.name }}</td>
-          <td>{{ data.sql }}</td>
+          <td>{{ shorten(data.sql) }}</td>
 
           <td>{{ data.description }}</td>
           <td>

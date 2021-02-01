@@ -13,7 +13,9 @@ export class SqlService {
     });
   }
   getSqlJobs(name: string) {
-    return this.httpClient.get<SqlJobInterface>(BaseURL + "jobs?name=" + name);
+    return this.httpClient.get<SqlJobInterface[]>(
+      BaseURL + "jobs?name=" + name
+    );
   }
   getSqlPlan(sql: string) {
     return sql;
