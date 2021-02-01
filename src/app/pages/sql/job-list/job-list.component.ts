@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from "@angular/core";
+import { SqlService } from "services";
 
 class SqlJob {
   name: string;
@@ -19,7 +20,7 @@ class SqlJob {
 })
 export class JobListComponent implements OnInit {
   dataSet: Array<SqlJob> = [];
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private sqlService: SqlService) {}
 
   ngOnInit() {
     this.dataSet.push({
@@ -34,6 +35,11 @@ export class JobListComponent implements OnInit {
         "insert into kafka3 select * from kafka4 join dameng1 on kafka3.id=dameng1.id",
       creator: "James",
       description: "second job",
+    });
+    this.sqlService.getSqlJobs("").subscribe((job) => {
+      if (job.uuid != undefined) {
+        console.log(job);
+      }
     });
     console.log(this.dataSet);
   }

@@ -25,6 +25,7 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   graphData: string;
   flinkSql: string;
+  sql_tip: string = "flink sql tips";
   @ViewChild(DagreComponent)
   dagreComponent: DagreComponent;
   @ViewChild(SqlMonacoEditorComponent)
