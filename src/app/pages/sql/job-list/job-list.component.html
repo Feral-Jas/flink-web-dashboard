@@ -10,7 +10,7 @@
         <tr>
           <th>Name</th>
           <th>SQL</th>
-          <th>Creator</th>
+
           <th>Description</th>
           <th>Action</th>
         </tr>
@@ -19,10 +19,10 @@
         <tr *ngFor="let data of editRowTable.data">
           <td>{{ data.name }}</td>
           <td>{{ data.sql }}</td>
-          <td>{{ data.creator }}</td>
+
           <td>{{ data.description }}</td>
           <td>
-            <a>Edit</a>
+            <a (click)="showCur()">Edit</a>
             <nz-divider nzType="vertical"></nz-divider>
             <a
               nz-popconfirm

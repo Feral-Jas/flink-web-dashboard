@@ -35,14 +35,20 @@ export class JobListComponent implements OnInit {
       creator: "James",
       description: "second job",
     });
+    console.log(this.dataSet);
   }
-  deleteRow(rowName: string) {
+  deleteRow(rowName: string): void {
+    // console.log(this.dataSet);
     const row = this.dataSet.find((row) => row.name == rowName);
     if (row != undefined) {
       const rowIndex = this.dataSet.indexOf(row);
       this.dataSet.splice(rowIndex, 1);
+      this.dataSet = [...this.dataSet];
       this.cdr.markForCheck();
     }
+    // console.log(this.dataSet);
+  }
+  showCur() {
     console.log(this.dataSet);
   }
 }

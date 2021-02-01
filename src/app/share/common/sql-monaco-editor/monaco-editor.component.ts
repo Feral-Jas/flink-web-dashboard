@@ -26,6 +26,7 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  Input,
 } from "@angular/core";
 import { fromEvent, merge, Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
@@ -41,7 +42,17 @@ import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 export class SqlMonacoEditorComponent implements AfterViewInit, OnDestroy {
   private editor: IStandaloneCodeEditor;
   private destroy$ = new Subject();
-  value: string;
+  value: string =
+    "CREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
+
+  @Input()
+  set inputValue(value: string) {
+    this.value = value;
+  }
+  get inputValue() {
+    return this.value;
+  }
+
   @Output()
   dataChange = new EventEmitter<string>();
 
