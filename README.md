@@ -7,10 +7,11 @@
 
 ## installation
 
-1. check proxy.json
 1. check proxy.conf.json
-1. npm run proxy
+2 npm run proxy
 
-ISSUE-1 init
-FLINK-5 check
-FLINK-3 check
+
+## 2.2-2.5
+1. using webflux & nio
+2. using springboot
+3. using netty
