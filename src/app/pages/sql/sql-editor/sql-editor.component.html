@@ -5,13 +5,7 @@
   [nzExtra]="extraTemplate"
 >
   <ng-container>
-    <div nz-row [nzJustify]="center">
-      <div nz-col>
-        <sql-monaco-editor
-          (dataChange)="dataChange($event)"
-        ></sql-monaco-editor>
-      </div>
-    </div>
+    <sql-monaco-editor (dataChange)="dataChange($event)"></sql-monaco-editor>
   </ng-container>
 
   <ng-template #extraTemplate>
@@ -29,7 +23,10 @@
       <button nz-button nzType="danger" [nzSize]="small" (click)="showPlan()">
         Show Plan
       </button>
-      <button nz-button nzType="success" [nzSize]="small" (click)="alert()">
+      <button nz-button nzType="success" [nzSize]="small" (click)="showPlan()">
+        Save
+      </button>
+      <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">
         Submit
       </button>
     </nz-button-group>
@@ -57,8 +54,27 @@
     <section>
       <p>
         <i nz-icon nzType="tool" nzTheme="outline"></i>
-        {{ sql_tip }}
+        Example 1: kafka to kafka job
       </p>
+      <textarea
+        rows="15"
+        [value]="sql_tip"
+        nz-input
+        readonly
+        style="resize:none"
+      ></textarea>
+      <nz-divider nzType="horizontal"></nz-divider>
+      <p>
+        <i nz-icon nzType="tool" nzTheme="outline"></i>
+        Example 2: kafka to dameng job
+      </p>
+      <textarea
+        rows="15"
+        [value]="sql_tip"
+        nz-input
+        readonly
+        style="resize:none"
+      ></textarea>
     </section>
   </ng-container>
 </nz-drawer>

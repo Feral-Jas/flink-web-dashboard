@@ -25,6 +25,7 @@
     "core-js": "^2.5.4",
     "d3": "^5.9.1",
     "dagre": "^0.8.4",
+    "js-base64": "^3.6.0",
     "monaco-editor": "^0.16.0",
     "ng-zorro-antd": "^7.2.0",
     "ngx-monaco-editor": "^7.0.0",

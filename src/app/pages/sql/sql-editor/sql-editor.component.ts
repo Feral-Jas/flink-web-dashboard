@@ -25,7 +25,9 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   graphData: string;
   flinkSql: string;
-  sql_tip: string = "flink sql tips";
+  sql_tip: string =
+    "CREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
+
   @ViewChild(DagreComponent)
   dagreComponent: DagreComponent;
   @ViewChild(SqlMonacoEditorComponent)
