@@ -20,5 +20,8 @@ export class SqlService {
       sqlJob
     );
   }
+  deleteJob(uuid: string) {
+    return this.httpClient.delete<{ code: number }>(BaseURL + "jobs/" + uuid);
+  }
   constructor(private httpClient: HttpClient) {}
 }

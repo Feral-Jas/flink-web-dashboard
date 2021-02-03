@@ -24,14 +24,14 @@
             <a
               (click)="showCur(data)"
               [routerLink]="['/sql-editor']"
-              [state]="{ name: data.name, sql: data.sql }"
+              [state]="{ name: data.name, sql: data.sql, uuid: data.uuid }"
               >Edit</a
             >
             <nz-divider nzType="vertical"></nz-divider>
             <a
               nz-popconfirm
-              nzPopconfirmTitle="Sure to delete?"
-              (nzOnConfirm)="deleteRow(data.name)"
+              nzTitle="Sure to delete?"
+              (nzOnConfirm)="deleteRow(data.uuid)"
               >Delete</a
             >
           </td>

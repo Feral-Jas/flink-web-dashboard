@@ -8,6 +8,7 @@ import {
 import { SqlJobInterface } from "interfaces";
 import { SqlService } from "services";
 import { Subject } from "rxjs";
+import { NzMessageService } from "ng-zorro-antd";
 @Component({
   selector: "flink-job-list",
   templateUrl: "./job-list.component.html",
@@ -17,20 +18,24 @@ import { Subject } from "rxjs";
 export class JobListComponent implements OnInit, OnDestroy {
   dataSet: Array<SqlJobInterface> = [];
   destroy$ = new Subject();
-  constructor(private cdr: ChangeDetectorRef, private sqlService: SqlService) {}
-  deleteRow(rowName: string): void {
-    // console.log(this.dataSet);
-    const row = this.dataSet.find((row) => row.name == rowName);
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private sqlService: SqlService,
+    private message: NzMessageService
+  ) {}
+  deleteRow(uuid: string) {
+    const row = this.dataSet.find((row) => row.uuid == uuid);
     if (row != undefined) {
       const rowIndex = this.dataSet.indexOf(row);
-      this.dataSet.splice(rowIndex, 1);
-      this.dataSet = [...this.dataSet];
-      this.cdr.markForCheck();
+      this.sqlService.deleteJob(uuid).subscribe((res) => {
+        if (res.code == 0) {
+          this.message.info("删除成功");
+          this.dataSet.splice(rowIndex, 1);
+          this.dataSet = [...this.dataSet];
+          this.cdr.markForCheck();
+        }
+      });
     }
-    // console.log(this.dataSet);
-  }
-  showCur(data2: SqlJobInterface) {
-    console.log(data2);
   }
   shorten(sql: string) {
     return sql.split(";").pop();
