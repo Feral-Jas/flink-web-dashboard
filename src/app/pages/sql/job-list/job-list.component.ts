@@ -6,8 +6,7 @@ import {
   OnDestroy,
 } from "@angular/core";
 import { SqlJobInterface } from "interfaces";
-import { SqlService, StatusService } from "services";
-import { flatMap, takeUntil } from "rxjs/operators";
+import { SqlService } from "services";
 import { Subject } from "rxjs";
 @Component({
   selector: "flink-job-list",
@@ -18,11 +17,7 @@ import { Subject } from "rxjs";
 export class JobListComponent implements OnInit, OnDestroy {
   dataSet: Array<SqlJobInterface> = [];
   destroy$ = new Subject();
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private sqlService: SqlService,
-    private statusService: StatusService
-  ) {}
+  constructor(private cdr: ChangeDetectorRef, private sqlService: SqlService) {}
   deleteRow(rowName: string): void {
     // console.log(this.dataSet);
     const row = this.dataSet.find((row) => row.name == rowName);
@@ -34,27 +29,22 @@ export class JobListComponent implements OnInit, OnDestroy {
     }
     // console.log(this.dataSet);
   }
-  showCur() {
-    console.log(this.dataSet);
+  showCur(data2: SqlJobInterface) {
+    console.log(data2);
   }
   shorten(sql: string) {
-    return sql.substring(0, 70) + "...";
+    return sql.split(";").pop();
   }
   ngOnInit() {
-    this.statusService.refresh$
-      .pipe(
-        takeUntil(this.destroy$),
-        flatMap(() => this.sqlService.getSqlJobs(""))
-      )
-      .subscribe(
-        (data) => {
-          this.dataSet = data;
-          this.cdr.markForCheck();
-        },
-        () => {
-          this.cdr.markForCheck();
-        }
-      );
+    this.sqlService.getSqlJobs("").subscribe(
+      (data) => {
+        this.dataSet = data;
+        this.cdr.markForCheck();
+      },
+      () => {
+        this.cdr.markForCheck();
+      }
+    );
   }
   ngOnDestroy() {
     this.destroy$.next();

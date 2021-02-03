@@ -6,12 +6,6 @@ import { SqlJobInterface } from "interfaces";
   providedIn: "root",
 })
 export class SqlService {
-  testSqlJob(title: string, text: string) {
-    return this.httpClient.post<SqlJobInterface>(BaseURL + "jobs", {
-      title,
-      text,
-    });
-  }
   getSqlJobs(name: string) {
     return this.httpClient.get<SqlJobInterface[]>(
       BaseURL + "jobs?name=" + name
@@ -20,6 +14,11 @@ export class SqlService {
   getSqlPlan(sql: string) {
     return sql;
   }
-
+  saveJob(sqlJob: SqlJobInterface) {
+    return this.httpClient.post<{ code: number }>(
+      BaseURL + "jobs/create",
+      sqlJob
+    );
+  }
   constructor(private httpClient: HttpClient) {}
 }

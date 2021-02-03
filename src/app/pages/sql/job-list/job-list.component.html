@@ -21,7 +21,12 @@
 
           <td>{{ data.description }}</td>
           <td>
-            <a (click)="showCur()">Edit</a>
+            <a
+              (click)="showCur(data)"
+              [routerLink]="['/sql-editor']"
+              [state]="{ name: data.name, sql: data.sql }"
+              >Edit</a
+            >
             <nz-divider nzType="vertical"></nz-divider>
             <a
               nz-popconfirm

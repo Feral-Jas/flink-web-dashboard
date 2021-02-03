@@ -30,9 +30,8 @@ import {
 } from "@angular/core";
 import { fromEvent, merge, Subject } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
-import { MonacoEditorService } from "share/common/monaco-editor/monaco-editor.service";
+import { MonacoEditorService } from "share/common/sql-monaco-editor/monaco-editor.service";
 import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
-import { atob } from "js-base64";
 @Component({
   selector: "sql-monaco-editor",
   template: ``,
@@ -44,9 +43,7 @@ export class SqlMonacoEditorComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject();
   // value: string =
   //   "CREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
-  value: string = atob(
-    "Q1JFQVRFIFRBQkxFIE15VGFibGUoCiAgICBuYW1lIHZhcmNoYXIsCiAgICBpZCBpbnQKIClXSVRIKAogICAgdHlwZSA9J2thZmthJywKICAgIGJvb3RzdHJhcFNlcnZlcnMgPSdsb2NhbGhvc3Q6OTA5MicsCiAgICB6b29rZWVwZXJRdW9ydW0gPSdsb2NhbGhvc3Q6MjE4MScsCiAgICBvZmZzZXRSZXNldCA9J2xhdGVzdCcsCiAgICB0b3BpYyA9J3NvdXJjZTMnLAogICAgdGltZXpvbmU9J0FzaWEvU2hhbmdoYWknLAogICAgdXBkYXRlTW9kZSA9J2FwcGVuZCcsCiAgICBlbmFibGVLZXlQYXJ0aXRpb25zID0nZmFsc2UnLAogICAgdG9waWNJc1BhdHRlcm4gPSdmYWxzZScsCiAgICBwYXJhbGxlbGlzbSA9JzEnCiApOwoKIENSRUFURSBUQUJMRSBNeVJlcygKICAgIG5hbWUgdmFyY2hhciwKICAgIGlkIGludAogKVdJVEgoCiAgICB0eXBlID0na2Fma2EnLAogICAgYm9vdHN0cmFwU2VydmVycyA9J2xvY2FsaG9zdDo5MDkyJywKICAgIHpvb2tlZXBlclF1b3J1bSA9J2xvY2FsaG9zdDoyMTgxJywKICAgIG9mZnNldFJlc2V0ID0nbGF0ZXN0JywKICAgIHRvcGljID0nc291cmNlNCcsCiAgICB0aW1lem9uZT0nQXNpYS9TaGFuZ2hhaScsCiAgICB1cGRhdGVNb2RlID0ndXBzZXJ0JywKICAgIGVuYWJsZUtleVBhcnRpdGlvbnMgPSdmYWxzZScsCiAgICB0b3BpY0lzUGF0dGVybiA9J2ZhbHNlJywKICAgIHBhcmFsbGVsaXNtID0nMScKICk7CgogaW5zZXJ0IGludG8gTXlSZXMgc2VsZWN0ICogZnJvbSBNeVRhYmxl"
-  );
+  value: string;
   @Input()
   set inputValue(value: string) {
     this.value = value;

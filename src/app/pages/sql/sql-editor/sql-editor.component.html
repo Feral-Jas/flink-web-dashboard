@@ -5,7 +5,10 @@
   [nzExtra]="extraTemplate"
 >
   <ng-container>
-    <sql-monaco-editor (dataChange)="dataChange($event)"></sql-monaco-editor>
+    <sql-monaco-editor
+      [inputValue]="flinkSql"
+      (dataChange)="dataChange($event)"
+    ></sql-monaco-editor>
   </ng-container>
 
   <ng-template #extraTemplate>
@@ -23,7 +26,7 @@
       <button nz-button nzType="danger" [nzSize]="small" (click)="showPlan()">
         Show Plan
       </button>
-      <button nz-button nzType="success" [nzSize]="small" (click)="showPlan()">
+      <button nz-button nzType="success" [nzSize]="small" (click)="saveJob()">
         Save
       </button>
       <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">

@@ -11,7 +11,11 @@ import { Subject } from "rxjs";
 import { SqlMonacoEditorComponent } from "share/common/sql-monaco-editor/monaco-editor.component";
 import { NzMessageService } from "ng-zorro-antd";
 import { DagreComponent } from "share/common/dagre/dagre.component";
-import { NodesItemCorrectInterface, NodesItemLinkInterface } from "interfaces";
+import {
+  NodesItemCorrectInterface,
+  NodesItemLinkInterface,
+  SqlJobInterface,
+} from "interfaces";
 @Component({
   selector: "flink-sql-editor",
   templateUrl: "./sql-editor.component.html",
@@ -26,8 +30,7 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   graphData: string;
   flinkSql: string;
   sql_tip: string =
-    "CREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
-
+    "name:[job]\nCREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
   @ViewChild(DagreComponent)
   dagreComponent: DagreComponent;
   @ViewChild(SqlMonacoEditorComponent)
@@ -38,19 +41,16 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
     private message: NzMessageService
   ) {}
   ngOnInit() {
+    if (history.state.name != undefined && history.state.sql != undefined) {
+      this.flinkSql = "name:[" + history.state.name + "]\n" + history.state.sql;
+    }
+    // console.log(this.replaceBracket("(;)"));
     this.planVisible = false;
     this.tipVisible = false;
   }
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-  testInterface(form: FormGroup) {
-    const title = form.get("title")!.value;
-    const text = form.get("text")!.value;
-    this.sqlService.testSqlJob(title, text).subscribe((event) => {
-      console.log(event);
-    });
   }
   alert() {
     this.message.info(this.flinkSql);
@@ -104,6 +104,20 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   }
   hidePlan() {
     this.planVisible = false;
+  }
+  saveJob() {
+    const carriageSplit = this.flinkSql.split("\n");
+    const firstLine = carriageSplit.shift();
+    const restLine = carriageSplit.join("\n");
+    let jobName = /name:\[(?<name>\S+)\]/gm.exec(firstLine!);
+    const job: SqlJobInterface = {
+      name: jobName!.groups!.name,
+      sql: restLine,
+      createdTime: new Date(),
+    };
+    this.sqlService.saveJob(job).subscribe((res) => {
+      if (res.code == 0) this.message.info("保存成功");
+    });
   }
   showTip() {
     this.tipVisible = true;
