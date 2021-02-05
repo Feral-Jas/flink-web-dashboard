@@ -13,15 +13,20 @@ export class SqlService {
     return sql;
   }
   saveJob(sqlJob: SqlJobInterface) {
-    return this.httpClient.post<{ code: number }>(BaseURL + "jobs", sqlJob);
+    return this.httpClient.post<{ created: SqlJobInterface }>(
+      BaseURL + "jobs",
+      sqlJob
+    );
   }
   editJob(sqlJob: SqlJobInterface) {
-    return this.httpClient.put<{ code: number }>(BaseURL + "jobs", sqlJob);
+    return this.httpClient.put<{ edited: SqlJobInterface }>(
+      BaseURL + "jobs/" + sqlJob.uuid,
+      sqlJob
+    );
   }
   deleteJob(uuid: string) {
-    return this.httpClient.post<{ code: number }>(
-      BaseURL + "jobs/" + uuid,
-      null
+    return this.httpClient.delete<{ deleted: string }>(
+      BaseURL + "jobs/" + uuid
     );
   }
   constructor(private httpClient: HttpClient) {}

@@ -119,13 +119,13 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
     };
     if (isCreate) {
       this.sqlService.saveJob(job).subscribe((res) => {
-        if (res.code == 0) this.message.info("保存成功");
+        if (res.created != undefined) this.message.info("保存成功");
       });
     } else {
       this.sqlService
         .editJob({ ...job, uuid: history.state.uuid })
         .subscribe((res) => {
-          if (res.code == 0) this.message.info("修改成功");
+          if (res.edited != undefined) this.message.info("修改成功");
         });
     }
   }

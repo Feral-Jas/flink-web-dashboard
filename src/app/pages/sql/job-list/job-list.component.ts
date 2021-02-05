@@ -28,7 +28,7 @@ export class JobListComponent implements OnInit, OnDestroy {
     if (row != undefined) {
       const rowIndex = this.dataSet.indexOf(row);
       this.sqlService.deleteJob(uuid).subscribe((res) => {
-        if (res.code == 0) {
+        if (res.deleted != undefined) {
           this.message.info("删除成功");
           this.dataSet.splice(rowIndex, 1);
           this.dataSet = [...this.dataSet];
