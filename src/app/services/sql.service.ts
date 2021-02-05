@@ -6,22 +6,23 @@ import { SqlJobInterface } from "interfaces";
   providedIn: "root",
 })
 export class SqlService {
-  getSqlJobs(name: string) {
-    return this.httpClient.get<SqlJobInterface[]>(
-      BaseURL + "jobs?name=" + name
-    );
+  getSqlJobs() {
+    return this.httpClient.get<{ jobs: SqlJobInterface[] }>(BaseURL + "jobs");
   }
   getSqlPlan(sql: string) {
     return sql;
   }
   saveJob(sqlJob: SqlJobInterface) {
-    return this.httpClient.post<{ code: number }>(
-      BaseURL + "jobs/create",
-      sqlJob
-    );
+    return this.httpClient.post<{ code: number }>(BaseURL + "jobs", sqlJob);
+  }
+  editJob(sqlJob: SqlJobInterface) {
+    return this.httpClient.put<{ code: number }>(BaseURL + "jobs", sqlJob);
   }
   deleteJob(uuid: string) {
-    return this.httpClient.delete<{ code: number }>(BaseURL + "jobs/" + uuid);
+    return this.httpClient.post<{ code: number }>(
+      BaseURL + "jobs/" + uuid,
+      null
+    );
   }
   constructor(private httpClient: HttpClient) {}
 }

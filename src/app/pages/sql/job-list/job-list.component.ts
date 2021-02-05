@@ -41,9 +41,9 @@ export class JobListComponent implements OnInit, OnDestroy {
     return sql.split(";").pop();
   }
   ngOnInit() {
-    this.sqlService.getSqlJobs("").subscribe(
+    this.sqlService.getSqlJobs().subscribe(
       (data) => {
-        this.dataSet = data;
+        this.dataSet = data.jobs;
         this.cdr.markForCheck();
       },
       () => {

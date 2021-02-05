@@ -105,7 +105,9 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   hidePlan() {
     this.planVisible = false;
   }
+
   saveJob() {
+    const isCreate = history.state.uuid == undefined ? true : false;
     const carriageSplit = this.flinkSql.split("\n");
     const firstLine = carriageSplit.shift();
     const restLine = carriageSplit.join("\n");
@@ -115,9 +117,17 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
       sql: restLine,
       createdTime: new Date(),
     };
-    this.sqlService.saveJob(job).subscribe((res) => {
-      if (res.code == 0) this.message.info("保存成功");
-    });
+    if (isCreate) {
+      this.sqlService.saveJob(job).subscribe((res) => {
+        if (res.code == 0) this.message.info("保存成功");
+      });
+    } else {
+      this.sqlService
+        .editJob({ ...job, uuid: history.state.uuid })
+        .subscribe((res) => {
+          if (res.code == 0) this.message.info("修改成功");
+        });
+    }
   }
   showTip() {
     this.tipVisible = true;

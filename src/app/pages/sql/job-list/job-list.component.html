@@ -22,7 +22,6 @@
           <td>{{ data.description }}</td>
           <td>
             <a
-              (click)="showCur(data)"
               [routerLink]="['/sql-editor']"
               [state]="{ name: data.name, sql: data.sql, uuid: data.uuid }"
               >Edit</a
