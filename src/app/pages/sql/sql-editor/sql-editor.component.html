@@ -5,52 +5,34 @@
   [nzExtra]="extraTemplate"
 >
   <ng-container>
-    <div nz-row [nzJustify]="center">
-      <div nz-col>
-        <sql-monaco-editor
-          (dataChange)="dataChange($event)"
-        ></sql-monaco-editor>
-      </div>
-    </div>
+    <sql-monaco-editor
+      [inputValue]="flinkSql"
+      (dataChange)="dataChange($event)"
+    ></sql-monaco-editor>
   </ng-container>
 
   <ng-template #extraTemplate>
-    <nz-space>
-      <nz-space-item>
-        <button
-          nz-button
-          nzType="danger"
-          [nzSize]="small"
-          nzShape="circle"
-          (click)="showTip()"
-        >
-          <i nz-icon nzType="question" nzTheme="outline"></i>
-        </button>
-      </nz-space-item>
-      <nz-space-item>
-        <nz-button-group>
-          <button
-            nz-button
-            nzType="danger"
-            [nzSize]="small"
-            (click)="testInterface(validateForm)"
-          >
-            Parse
-          </button>
-          <button
-            nz-button
-            nzType="success"
-            [nzSize]="small"
-            (click)="showPlan()"
-          >
-            Show Plan
-          </button>
-          <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">
-            Submit
-          </button>
-        </nz-button-group>
-      </nz-space-item>
-    </nz-space>
+    <button
+      nz-button
+      nzType="primary"
+      [nzSize]="small"
+      nzShape="circle"
+      (click)="showTip()"
+    >
+      <i nz-icon nzType="question" nzTheme="outline"></i>
+    </button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <nz-button-group>
+      <button nz-button nzType="danger" [nzSize]="small" (click)="showPlan()">
+        Show Plan
+      </button>
+      <button nz-button nzType="success" [nzSize]="small" (click)="saveJob()">
+        Save
+      </button>
+      <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">
+        Submit
+      </button>
+    </nz-button-group>
   </ng-template>
 </nz-card>
 <nz-drawer
@@ -68,13 +50,34 @@
   [nzWidth]="'30%'"
   [nzVisible]="tipVisible"
   [nzPlacement]="'right'"
-  [nzTitle]="'SQL Tips'"
+  [nzTitle]="'Flink SQL Tips'"
   (nzOnClose)="hideTip()"
 >
   <ng-container>
     <section>
-      <h1>Flink SQL tips</h1>
-      <p>simple declaration of flink sql</p>
+      <p>
+        <i nz-icon nzType="tool" nzTheme="outline"></i>
+        Example 1: kafka to kafka job
+      </p>
+      <textarea
+        rows="15"
+        [value]="sql_tip"
+        nz-input
+        readonly
+        style="resize:none"
+      ></textarea>
+      <nz-divider nzType="horizontal"></nz-divider>
+      <p>
+        <i nz-icon nzType="tool" nzTheme="outline"></i>
+        Example 2: kafka to dameng job
+      </p>
+      <textarea
+        rows="15"
+        [value]="sql_tip"
+        nz-input
+        readonly
+        style="resize:none"
+      ></textarea>
     </section>
   </ng-container>
 </nz-drawer>

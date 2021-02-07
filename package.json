@@ -7,7 +7,7 @@
     "build": "ng build --prod --base-href ./",
     "test": "ng test",
     "lint": "ng lint",
-    "proxy": "ng serve --proxy-config proxy.conf.json"
+    "proxy": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0"
   },
   "private": true,
   "dependencies": {
@@ -25,11 +25,12 @@
     "core-js": "^2.5.4",
     "d3": "^5.9.1",
     "dagre": "^0.8.4",
+    "js-base64": "^3.6.0",
     "monaco-editor": "^0.16.0",
     "ng-zorro-antd": "^7.2.0",
     "ngx-monaco-editor": "^7.0.0",
     "rxjs": "~6.3.3",
-    "tslib": "^1.9.0",
+    "tslib": "^1.14.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

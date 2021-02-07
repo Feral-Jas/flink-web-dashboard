@@ -3,46 +3,56 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  OnDestroy,
 } from "@angular/core";
-
-class SqlJob {
-  name: string;
-  sql: string;
-  creator: string;
-  description: string;
-}
+import { SqlJobInterface } from "interfaces";
+import { SqlService } from "services";
+import { Subject } from "rxjs";
+import { NzMessageService } from "ng-zorro-antd";
 @Component({
   selector: "flink-job-list",
   templateUrl: "./job-list.component.html",
   styleUrls: ["./job-list.component.less"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class JobListComponent implements OnInit {
-  dataSet: Array<SqlJob> = [];
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  ngOnInit() {
-    this.dataSet.push({
-      name: "hacko",
-      sql: "insert into kafka2 select * from kafka1",
-      creator: "James",
-      description: "first job",
-    });
-    this.dataSet.push({
-      name: "metro",
-      sql:
-        "insert into kafka3 select * from kafka4 join dameng1 on kafka3.id=dameng1.id",
-      creator: "James",
-      description: "second job",
-    });
-  }
-  deleteRow(rowName: string) {
-    const row = this.dataSet.find((row) => row.name == rowName);
+export class JobListComponent implements OnInit, OnDestroy {
+  dataSet: Array<SqlJobInterface> = [];
+  destroy$ = new Subject();
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private sqlService: SqlService,
+    private message: NzMessageService
+  ) {}
+  deleteRow(uuid: string) {
+    const row = this.dataSet.find((row) => row.uuid == uuid);
     if (row != undefined) {
       const rowIndex = this.dataSet.indexOf(row);
-      this.dataSet.splice(rowIndex, 1);
-      this.cdr.markForCheck();
+      this.sqlService.deleteJob(uuid).subscribe((res) => {
+        if (res.deleted != undefined) {
+          this.message.info("删除成功");
+          this.dataSet.splice(rowIndex, 1);
+          this.dataSet = [...this.dataSet];
+          this.cdr.markForCheck();
+        }
+      });
     }
-    console.log(this.dataSet);
+  }
+  shorten(sql: string) {
+    return sql.split(";").pop();
+  }
+  ngOnInit() {
+    this.sqlService.getSqlJobs().subscribe(
+      (data) => {
+        this.dataSet = data.jobs;
+        this.cdr.markForCheck();
+      },
+      () => {
+        this.cdr.markForCheck();
+      }
+    );
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

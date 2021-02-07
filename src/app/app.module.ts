@@ -74,6 +74,7 @@ import {
   OrderedListOutline,
   ProjectOutline,
   QuestionOutline,
+  ToolOutline,
 } from "@ant-design/icons-angular/icons";
 
 import { StatusService } from "services";
@@ -113,6 +114,7 @@ export function AppInitServiceFactory(
     {
       provide: NZ_ICONS,
       useValue: [
+        ToolOutline,
         QuestionOutline,
         BarsOutline,
         BuildOutline,
