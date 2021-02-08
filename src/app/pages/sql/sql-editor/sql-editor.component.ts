@@ -129,6 +129,20 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
         });
     }
   }
+  runJob() {
+    const carriageSplit = this.flinkSql.split("\n");
+    const firstLine = carriageSplit.shift();
+    const restLine = carriageSplit.join("\n");
+    let jobName = /name:\[(?<name>\S+)\]/gm.exec(firstLine!);
+    const job: SqlJobInterface = {
+      name: jobName!.groups!.name,
+      sql: restLine,
+      createdTime: new Date(),
+    };
+    this.sqlService.runJob(job).subscribe((data) => {
+      this.message.info(data.jobId);
+    });
+  }
   showTip() {
     this.tipVisible = true;
   }

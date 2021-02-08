@@ -75,6 +75,7 @@ import {
   ProjectOutline,
   QuestionOutline,
   ToolOutline,
+  DragOutline,
 } from "@ant-design/icons-angular/icons";
 
 import { StatusService } from "services";
@@ -154,6 +155,7 @@ export function AppInitServiceFactory(
         EditOutline,
         OrderedListOutline,
         ProjectOutline,
+        DragOutline,
       ],
     },
     {
