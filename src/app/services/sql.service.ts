@@ -29,5 +29,11 @@ export class SqlService {
       BaseURL + "jobs/" + uuid
     );
   }
+  runJob(sqlJob: SqlJobInterface) {
+    return this.httpClient.post<{ jobId: string }>(
+      BaseURL + "jobs/run",
+      sqlJob
+    );
+  }
   constructor(private httpClient: HttpClient) {}
 }

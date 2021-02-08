@@ -1,7 +1,6 @@
 <nz-card
   [nzBordered]="false"
   [nzTitle]="'Flink SQL Editor'"
-  [nzLoading]="isLoading"
   [nzExtra]="extraTemplate"
 >
   <ng-container>
@@ -29,7 +28,7 @@
       <button nz-button nzType="success" [nzSize]="small" (click)="saveJob()">
         Save
       </button>
-      <button nz-button nzType="primary" [nzSize]="small" (click)="alert()">
+      <button nz-button nzType="primary" [nzSize]="small" (click)="runJob()">
         Submit
       </button>
     </nz-button-group>
