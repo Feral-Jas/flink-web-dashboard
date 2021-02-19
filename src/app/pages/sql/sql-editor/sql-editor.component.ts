@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { SqlService } from "services";
+import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { SqlMonacoEditorComponent } from "share/common/sql-monaco-editor/monaco-editor.component";
 import { NzMessageService } from "ng-zorro-antd";
@@ -38,7 +39,8 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
 
   constructor(
     private sqlService: SqlService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {}
   ngOnInit() {
     if (history.state.name != undefined && history.state.sql != undefined) {
@@ -140,7 +142,7 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
       createdTime: new Date(),
     };
     this.sqlService.runJob(job).subscribe((data) => {
-      this.message.info(data.jobId);
+      this.router.navigate(["job", data.jobId]).then();
     });
   }
   showTip() {
