@@ -16,22 +16,51 @@
  * limitations under the License.
  */
 
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: 'overview', loadChildren: './pages/overview/overview.module#OverviewModule' },
-  { path: 'submit', loadChildren: './pages/submit/submit.module#SubmitModule' },
-  { path: 'job-manager', loadChildren: './pages/job-manager/job-manager.module#JobManagerModule' },
-  { path: 'task-manager', loadChildren: './pages/task-manager/task-manager.module#TaskManagerModule' },
-  { path: 'job', loadChildren: './pages/job/job.module#JobModule' },
-  { path: 'sql-editor', loadChildren: './pages/sql/sql-editor/sql-editor.module#SqlEditorModule' },
-  { path: 'sql-list', loadChildren: './pages/sql/job-list/job-list.module#JobListModule' },
-  { path: '**', redirectTo: 'overview', pathMatch: 'full' }
+  {
+    path: "overview",
+    loadChildren: "./pages/overview/overview.module#OverviewModule",
+  },
+  { path: "submit", loadChildren: "./pages/submit/submit.module#SubmitModule" },
+  {
+    path: "job-manager",
+    loadChildren: "./pages/job-manager/job-manager.module#JobManagerModule",
+  },
+  {
+    path: "task-manager",
+    loadChildren: "./pages/task-manager/task-manager.module#TaskManagerModule",
+  },
+  { path: "job", loadChildren: "./pages/job/job.module#JobModule" },
+  {
+    path: "sql-editor",
+    loadChildren: "./pages/sql/sql-editor/sql-editor.module#SqlEditorModule",
+  },
+  {
+    path: "sql-list",
+    loadChildren: "./pages/sql/job-list/job-list.module#JobListModule",
+  },
+  {
+    path: "flinkx-editor",
+    loadChildren:
+      "./pages/flinkx/flinkx-editor/flinkx-editor.module#FlinkxEditorModule",
+  },
+  {
+    path: "flinkx-list",
+    loadChildren: "./pages/flinkx/job-list/job-list.module#JobListModule",
+  },
+  { path: "**", redirectTo: "overview", pathMatch: "full" },
 ];
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forRoot(routes, { useHash: true, preloadingStrategy: PreloadAllModules })]
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: true,
+      preloadingStrategy: PreloadAllModules,
+    }),
+  ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
