@@ -22,7 +22,7 @@
   line-height: 64px;
   padding: 0 24px;
   cursor: pointer;
-  transition: color .3s;
+  transition: color 0.3s;
 }
 
 .trigger:hover {
@@ -53,14 +53,13 @@
 
     img {
       height: 32px;
-      width: 32px;
+      width: auto;
       display: inline-block;
       vertical-align: middle;
       top: -4px;
       position: relative;
     }
   }
-
 }
 
 nz-layout {
@@ -79,7 +78,7 @@ nz-sider {
 nz-header {
   background: @component-background;
   border-bottom: 1px solid @border-color-split;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   position: relative;
   padding: 0px 12px 0px 0px;
   flex: 0 0 auto;
@@ -118,7 +117,7 @@ nz-header {
     }
 
     .action {
-      transition: all .3s;
+      transition: all 0.3s;
 
       &:hover {
         background: @background-color-light;
@@ -166,4 +165,3 @@ nz-alert {
     opacity: 1;
   }
 }
-

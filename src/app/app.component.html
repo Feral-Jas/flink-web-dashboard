@@ -24,8 +24,8 @@
   >
     <div class="logo">
       <a href="#/"
-        ><img src="assets/images/flink.svg" />
-        <h1>Flink控制台</h1>
+        ><img src="assets/images/css_logo.png" />
+        <h1>CSS-Flink控制台</h1>
       </a>
     </div>
     <ul
@@ -93,7 +93,7 @@
       <li nz-submenu [nzOpen]="false">
         <span title>
           <i nz-icon type="project"></i>
-          <span>提交SQL任务</span>
+          <span>在线任务管理</span>
         </span>
         <ul>
           <li
@@ -101,7 +101,7 @@
             routerLinkActive="ant-menu-item-selected"
             [routerLink]="['/sql-editor']"
           >
-            <span><i nz-icon type="edit"></i><span>SQL任务编辑器</span></span>
+            <span><i nz-icon type="edit"></i><span>任务编辑器</span></span>
           </li>
           <li
             nz-menu-item
@@ -109,34 +109,7 @@
             [routerLink]="['/sql-list']"
           >
             <span
-              ><i nz-icon type="ordered-list"></i><span>SQL任务列表</span></span
-            >
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu [nzOpen]="false">
-        <span title>
-          <i nz-icon type="project"></i>
-          <span>FlinkX任务管理</span>
-        </span>
-        <ul>
-          <li
-            nz-menu-item
-            routerLinkActive="ant-menu-item-selected"
-            [routerLink]="['/flinkx-editor']"
-          >
-            <span
-              ><i nz-icon type="edit"></i><span>FlinkX任务编辑器</span></span
-            >
-          </li>
-          <li
-            nz-menu-item
-            routerLinkActive="ant-menu-item-selected"
-            [routerLink]="['/flinkx-list']"
-          >
-            <span
-              ><i nz-icon type="ordered-list"></i
-              ><span>FlinkX任务列表</span></span
+              ><i nz-icon type="ordered-list"></i><span>任务列表</span></span
             >
           </li>
         </ul>

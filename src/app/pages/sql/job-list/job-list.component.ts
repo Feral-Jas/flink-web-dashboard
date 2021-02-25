@@ -38,7 +38,13 @@ export class JobListComponent implements OnInit, OnDestroy {
     }
   }
   shorten(sql: string) {
-    return sql.split(";").pop();
+    const dml = sql.split(";");
+    if (dml[dml.length - 1] == ";") {
+      dml.pop();
+      return dml.pop();
+    } else {
+      return dml.pop();
+    }
   }
   ngOnInit() {
     this.sqlService.getSqlJobs().subscribe(

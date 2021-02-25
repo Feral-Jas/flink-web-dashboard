@@ -42,15 +42,6 @@ const routes: Routes = [
     path: "sql-list",
     loadChildren: "./pages/sql/job-list/job-list.module#JobListModule",
   },
-  {
-    path: "flinkx-editor",
-    loadChildren:
-      "./pages/flinkx/flinkx-editor/flinkx-editor.module#FlinkxEditorModule",
-  },
-  {
-    path: "flinkx-list",
-    loadChildren: "./pages/flinkx/job-list/job-list.module#JobListModule",
-  },
   { path: "**", redirectTo: "overview", pathMatch: "full" },
 ];
 

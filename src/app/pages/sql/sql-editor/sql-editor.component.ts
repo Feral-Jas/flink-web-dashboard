@@ -12,6 +12,7 @@ import { Subject } from "rxjs";
 import { SqlMonacoEditorComponent } from "share/common/sql-monaco-editor/monaco-editor.component";
 import { NzMessageService } from "ng-zorro-antd";
 import { DagreComponent } from "share/common/dagre/dagre.component";
+// import { format } from "sql-formatter";
 import {
   NodesItemCorrectInterface,
   NodesItemLinkInterface,
@@ -30,8 +31,14 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   graphData: string;
   flinkSql: string;
+  title: string =
+    "--***********************************************--\n" +
+    "--JOBNAME:\n" +
+    "--AUTHOR:\n" +
+    "--TYPE:\n" +
+    "--***********************************************--\n";
   sql_tip: string =
-    "name:[job]\nCREATE TABLE MyTable(\n\tid varchar,\n\tname varchar\n\t--ts timestamp,\n\t--tsDate Date\n)WITH(\n\ttype ='kafka11',\n\tbootstrapServers ='172.16.8.107:9092',\n\tzookeeperQuorum ='172.16.8.107:2181/kafka',\n\toffsetReset ='latest',\n\ttopic ='mqTest01',\n\ttimezone='Asia/Shanghai',\n\ttopicIsPattern ='false',\n\tparallelism ='1'\n);";
+    "CREATE TABLE MyTable(    name varchar,    id int    )WITH(        type ='kafka',        bootstrapServers ='localhost:9092',        zookeeperQuorum ='localhost:2181',           offsetReset ='latest',        topic ='Flink_Test',        timezone='Asia/Shanghai',        updateMode ='append',            enableKeyPartitions ='false',            topicIsPattern ='false',        parallelism ='1' );";
   @ViewChild(DagreComponent)
   dagreComponent: DagreComponent;
   @ViewChild(SqlMonacoEditorComponent)
@@ -44,7 +51,12 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit() {
     if (history.state.name != undefined && history.state.sql != undefined) {
-      this.flinkSql = "name:[" + history.state.name + "]\n" + history.state.sql;
+      const sentence: string = history.state.sql;
+      let rs = sentence.replace(/,/gm, ",\n\t");
+      rs = rs.replace(/\)/gm, "\n)");
+      rs = rs.replace(/\(/gm, "(\n\t");
+      rs = rs.replace(/;/gm, ";\n");
+      this.flinkSql = "name:[" + history.state.name + "]\n" + rs;
     }
     // console.log(this.replaceBracket("(;)"));
     this.planVisible = false;
@@ -112,7 +124,9 @@ export class SqlEditorComponent implements OnInit, OnDestroy {
     const isCreate = history.state.uuid == undefined ? true : false;
     const carriageSplit = this.flinkSql.split("\n");
     const firstLine = carriageSplit.shift();
-    const restLine = carriageSplit.join("\n");
+    let restLine = carriageSplit.join("");
+    restLine = restLine.replace("\t", "");
+    console.log(restLine);
     let jobName = /name:\[(?<name>\S+)\]/gm.exec(firstLine!);
     const job: SqlJobInterface = {
       name: jobName!.groups!.name,
